@@ -29,6 +29,7 @@ dependencies:
   sqflite: any
   barcode_scan: ^0.0.8
   qr_flutter: ^1.1.5
+  redux: ^3.0.0
 
 
 dev_dependencies:
