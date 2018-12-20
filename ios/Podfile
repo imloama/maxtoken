@@ -40,7 +40,7 @@ target 'Runner' do
   system('rm -rf .symlinks')
   system('mkdir -p .symlinks/plugins')
 
-  pod "TokenCore", git: "https://github.com/consenlabs/token-core-ios.git", branch: "master"
+  pod "TokenCore", git: "https://github.com/consenlabs/token-core-ios.git"
 
   # Flutter Pods
   generated_xcode_build_settings = parse_KV_file('./Flutter/Generated.xcconfig')
