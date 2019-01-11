@@ -13,9 +13,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
     }
-    
 }
 
 rootProject.buildDir = '../build'

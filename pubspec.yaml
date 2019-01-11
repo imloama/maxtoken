@@ -30,7 +30,7 @@ dependencies:
   barcode_scan: ^0.0.8
   qr_flutter: ^1.1.5
   redux: ^3.0.0
-
+  flutter_redux: ^0.5.3
 
 dev_dependencies:
   flutter_test:
