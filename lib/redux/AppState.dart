@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../model/Wallet.dart';
+import './LocaleRedux.dart';
+import './ThemeRedux.dart';
+import './WalletRedux.dart';
 
 class AppState {
 
@@ -23,7 +26,10 @@ class AppState {
 
 
 AppState appReducer(AppState state, action){
-  return AppState({
-    
-  });
+  return AppState(
+    themeData: ThemeDataReducer(state.themeData, action),
+    locale: LocaleReducer(state.locale, action),
+    wallets: WalletReducer(state.wallets, action),
+
+  );
 }
