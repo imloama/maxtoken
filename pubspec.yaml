@@ -31,6 +31,23 @@ dependencies:
   qr_flutter: ^1.1.5
   redux: ^3.0.0
   flutter_redux: ^0.5.3
+  fluttertoast: ^2.0.9
+  device_info: ^0.2.1
+  share: ^0.5.3
+  flutter_spinkit: ^3.1.0
+  flutter_webview_plugin: ^0.2.1+2
+  pub_semver: ^1.4.2
+  flutter_statusbar: ^0.0.1
+  flutter_svg: ^0.6.3
+  flutter_slidable: ^0.4.3
+  dio: ^1.0.6
+  flutter_localizations:
+   sdk: flutter
+  event_bus:  ^1.0.1
+  flutter_cache_manager: ^0.2.0+1
+  permission_handler: ^2.0.0
+  scoped_model: ^0.3.0
+  package_info: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -78,3 +95,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+
+
+  assets:
+    - static/image/logo.png
+    - static/image/welcome.png
+
+  fonts:
+    - family: tokenIconFont
+      fonts:
+        - asset: static/font/iconfont.ttf
