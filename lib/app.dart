@@ -6,7 +6,10 @@ import './redux/AppState.dart';
 import './theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import './i18n/i18n_delegate.dart';
-
+import './i18n/i18n.dart';
+import './routes.dart';
+import './page/welcome.dart';
+import './page/home.dart';
 
 class MaxTokenApp extends StatelessWidget{
 
@@ -42,7 +45,16 @@ class MaxTokenApp extends StatelessWidget{
           supportedLocales: [store.state.locale],
           theme: store.state.themeData,
           routes: {
-            
+            Routes.Welcome: (context){
+              store.state.platformLocale = Localizations.localeOf(context);
+              return WelcomePage();
+            },
+            Routes.MyWallet: (context){
+
+            },
+            Routes.Home: (context){
+              return HomePage();
+            }
           },
         );
       },),
