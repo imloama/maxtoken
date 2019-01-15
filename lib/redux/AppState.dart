@@ -6,16 +6,18 @@ import './WalletRedux.dart';
 
 class AppState {
 
-  ///主题数据
+  // theme
   ThemeData themeData;
 
-   ///语言
+   // choosed locale
   Locale locale;
-   ///当前手机平台默认语言
+   // current locale on phone
   Locale platformLocale;
   
+  // all wallets
   List<Wallet> wallets;
 
+  // selected wallet
   int selected;
 
   AppState({this.themeData, this.locale, this.platformLocale, this.wallets, this.selected});

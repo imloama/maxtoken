@@ -10,6 +10,7 @@ import './i18n/i18n.dart';
 import './routes.dart';
 import './page/welcome.dart';
 import './page/home.dart';
+import './page/index.dart';
 
 class MaxTokenApp extends StatelessWidget{
 
@@ -49,11 +50,8 @@ class MaxTokenApp extends StatelessWidget{
               store.state.platformLocale = Localizations.localeOf(context);
               return WelcomePage();
             },
-            Routes.MyWallet: (context){
-
-            },
-            Routes.Home: (context){
-              return HomePage();
+            Routes.Index: (context){
+              return IndexPage();
             }
           },
         );

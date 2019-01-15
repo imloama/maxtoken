@@ -21,7 +21,7 @@ class Navigators {
 
    ///主页
   static goHome(BuildContext context) {
-    Navigator.pushReplacementNamed(context, Routes.Home);
+    Navigator.pushReplacementNamed(context, Routes.Index);
   }
 
 

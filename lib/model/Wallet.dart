@@ -12,9 +12,9 @@ class Wallet {
 }
 
 enum BlockChainType {
-  BitCoin,
-  Etherum,
-  Stellar,
-  EOS,
-  Ripple
+  BitCoin,// 0
+  Etherum,// 1
+  Stellar,//2
+  EOS,//3
+  Ripple//4
 }
