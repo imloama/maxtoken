@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import '../model/Wallet.dart';
-import './LocaleRedux.dart';
-import './ThemeRedux.dart';
-import './WalletRedux.dart';
+import '../model/wallet.dart';
+import '../model/site.dart';
+import './locale_redux.dart';
+import './theme_redux.dart';
+import './wallet_redux.dart';
+import './site_redux.dart';
 
 class AppState {
 
+  Site site;
   // theme
   ThemeData themeData;
 
@@ -20,7 +23,7 @@ class AppState {
   // selected wallet
   int selected;
 
-  AppState({this.themeData, this.locale, this.platformLocale, this.wallets, this.selected});
+  AppState({this.site,this.themeData, this.locale, this.platformLocale, this.wallets, this.selected});
 
 
 
@@ -32,6 +35,7 @@ AppState appReducer(AppState state, action){
     themeData: ThemeDataReducer(state.themeData, action),
     locale: LocaleReducer(state.locale, action),
     wallets: WalletReducer(state.wallets, action),
+    site: SiteReducer(state.site, action),
 
   );
 }

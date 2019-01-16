@@ -13,9 +13,9 @@ import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_statusbar/flutter_statusbar.dart';
 
-import '../redux/AppState.dart';
-import '../redux/ThemeRedux.dart';
-import '../redux/LocaleRedux.dart';
+import '../redux/app_state.dart';
+import '../redux/theme_redux.dart';
+import '../redux/locale_redux.dart';
 import '../locales/base.dart';
 import '../locales/en.dart';
 import '../locales/zh_cn.dart';

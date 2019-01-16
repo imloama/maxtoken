@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-import '../model/Wallet.dart';
+import '../model/wallet.dart';
 
 ///通过 flutter_redux 的 combineReducers，实现 Reducer 方法
 final WalletReducer = combineReducers<List<Wallet>>([

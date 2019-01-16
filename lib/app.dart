@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import './redux/AppState.dart';
+import './redux/app_state.dart';
 import './theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import './i18n/i18n_delegate.dart';
