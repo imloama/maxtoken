@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../routes.dart';
-import '../page/full_web_view.dart';
+import 'package:maxtoken/routes.dart';
+import 'package:maxtoken/page/full_web_view.dart';
 
 
 class Navigators {

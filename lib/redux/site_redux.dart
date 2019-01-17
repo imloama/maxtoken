@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-import '../model/site.dart';
+import 'package:maxtoken/model/site.dart';
 
 
 ///通过 flutter_redux 的 combineReducers，实现 Reducer 方法

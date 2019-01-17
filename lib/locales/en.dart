@@ -1,4 +1,4 @@
-import './base.dart';
+import 'package:maxtoken/locales/base.dart';
 
 class EnString extends BaseString{
   

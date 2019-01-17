@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/commons.dart';
-import '../utils/navigators.dart';
+import 'package:maxtoken/utils/commons.dart';
+import 'package:maxtoken/utils/navigators.dart';
 
 class WelcomePage extends StatefulWidget {
   

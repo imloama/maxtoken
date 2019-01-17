@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import '../locales/base.dart';
-import '../locales/en.dart';
-import '../locales/zh_cn.dart';
+import 'package:maxtoken/locales/base.dart';
+import 'package:maxtoken/locales/en.dart';
+import 'package:maxtoken/locales/zh_cn.dart';
 
 class I18N{
   final Locale locale;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../model/wallet.dart';
-import '../model/site.dart';
-import './locale_redux.dart';
-import './theme_redux.dart';
-import './wallet_redux.dart';
-import './site_redux.dart';
+import 'package:maxtoken/model/wallet.dart';
+import 'package:maxtoken/model/site.dart';
+import 'package:maxtoken/redux/locale_redux.dart';
+import 'package:maxtoken/redux/theme_redux.dart';
+import 'package:maxtoken/redux/wallet_redux.dart';
+import 'package:maxtoken/redux/site_redux.dart';
 
 class AppState {
 

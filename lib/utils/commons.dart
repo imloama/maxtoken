@@ -13,17 +13,17 @@ import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_statusbar/flutter_statusbar.dart';
 
-import '../redux/app_state.dart';
-import '../redux/theme_redux.dart';
-import '../redux/locale_redux.dart';
-import '../locales/base.dart';
-import '../locales/en.dart';
-import '../locales/zh_cn.dart';
-import '../i18n/i18n.dart';
-import '../i18n//i18n_delegate.dart';
-import './navigators.dart';
-import '../theme/theme.dart';
-import '../urls.dart';
+import 'package:maxtoken/redux/app_state.dart';
+import 'package:maxtoken/redux/theme_redux.dart';
+import 'package:maxtoken/redux/locale_redux.dart';
+import 'package:maxtoken/locales/base.dart';
+import 'package:maxtoken/locales/en.dart';
+import 'package:maxtoken/locales/zh_cn.dart';
+import 'package:maxtoken/i18n/i18n.dart';
+import 'package:maxtoken/i18n//i18n_delegate.dart';
+import 'package:maxtoken/utils/navigators.dart';
+import 'package:maxtoken/theme/theme.dart';
+import 'package:maxtoken/urls.dart';
 
 
 class Commons {

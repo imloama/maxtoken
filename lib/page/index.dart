@@ -3,10 +3,10 @@
  */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './home.dart';
-import './my.dart';
-import './explorer.dart';
-import '../utils/commons.dart';
+import 'package:maxtoken/page/home.dart';
+import 'package:maxtoken/page/my.dart';
+import 'package:maxtoken/page/explorer.dart';
+import 'package:maxtoken/utils/commons.dart';
 
 class IndexPage extends StatefulWidget{
   @override

@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import './redux/app_state.dart';
-import './theme/theme.dart';
+import 'package:maxtoken/redux/app_state.dart';
+import 'package:maxtoken/theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import './i18n/i18n_delegate.dart';
-import './i18n/i18n.dart';
-import './routes.dart';
-import './page/welcome.dart';
-import './page/home.dart';
-import './page/index.dart';
+import 'package:maxtoken/i18n/i18n_delegate.dart';
+import 'package:maxtoken/i18n/i18n.dart';
+import 'package:maxtoken/routes.dart';
+import 'package:maxtoken/page/welcome.dart';
+import 'package:maxtoken/page/home.dart';
+import 'package:maxtoken/page/index.dart';
 
 class MaxTokenApp extends StatelessWidget{
 

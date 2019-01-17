@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/commons.dart';
+import 'package:maxtoken/utils/commons.dart';
 
 /**
  * home page

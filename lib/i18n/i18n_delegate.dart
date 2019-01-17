@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import './i18n.dart';
+import 'package:maxtoken/i18n/i18n.dart';
 
 class I18NDelegate extends LocalizationsDelegate<I18N>{
   I18NDelegate();
