@@ -18,29 +18,13 @@ class IndexPage extends StatefulWidget{
 
 class _IndexPageState extends State<IndexPage>{
 
-   /// 单击提示退出
-  Future<bool> _dialogExitApp(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) => new AlertDialog(
-              content: new Text(Commons.getLocale(context).app_back_tip),
-              actions: <Widget>[
-                new FlatButton(onPressed: () => Navigator.of(context).pop(false), child: new Text(Commons.getLocale(context).cancel)),
-                new FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                    child: new Text(Commons.getLocale(context).ok))
-              ],
-            ));
-  }
-
   int _tabIndex = 0;
 
   BottomNavigationBar _navbar(BuildContext context){
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
+          // title:,
           icon: Icon(Icons.home)
         ),
         BottomNavigationBarItem(

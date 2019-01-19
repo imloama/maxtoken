@@ -34,14 +34,17 @@ class _WelcomePageState extends State<WelcomePage>  {
     //     return true;
     //   });
     // });
-    Navigators.goHome(context);
+    new Future.delayed(const Duration(seconds: 3), () {
+      Navigators.goHome(context);
+    });
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return new Container(
           child: new Center(
-            child: new Image(image: new AssetImage('static/images/welcome.png')),
+            child: new Image(image: new AssetImage('static/image/welcome.png')),
           ),
         );
   }

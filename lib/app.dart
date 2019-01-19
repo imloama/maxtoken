@@ -44,7 +44,7 @@ class MaxTokenApp extends StatelessWidget{
           ],
           locale: store.state.locale,
           supportedLocales: [store.state.locale],
-          theme: store.state.themeData,
+          // theme: store.state.themeData,
           routes: {
             Routes.Welcome: (context){
               store.state.platformLocale = Localizations.localeOf(context);
