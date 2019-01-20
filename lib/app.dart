@@ -19,7 +19,7 @@ class MaxTokenApp extends StatelessWidget{
     initialState: AppState(
       wallets: List(),
       themeData: kDarkMTTheme.data,
-        locale: Locale('zh', 'CH')
+      locale: Locale('zh', 'CH')
       ),
   );
 
@@ -41,7 +41,7 @@ class MaxTokenApp extends StatelessWidget{
           ],
           locale: store.state.locale,
           supportedLocales: [store.state.locale],
-          // theme: store.state.themeData,
+          theme: store.state.themeData,
           routes: {
             Routes.Welcome: (context){
               store.state.platformLocale = Localizations.localeOf(context);
