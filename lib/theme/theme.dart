@@ -10,6 +10,8 @@ class MTTheme{
 
 }
 
+
+
 final MTTheme kDarkMTTheme = MTTheme._('Dark', _buildDarkTheme());
 final MTTheme kLightMTTheme = MTTheme._('Light', _buildLightTheme());
 
@@ -20,7 +22,7 @@ TextTheme _buildTextTheme(TextTheme base) {
         fontFamily: 'GoogleSans',
       ),
     );
-  }
+}
 
 
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maxtoken/utils/commons.dart';
+import 'package:maxtoken/theme/theme.dart';
+
 
 /**
  * home page
@@ -36,9 +38,16 @@ class _HomePageState extends State<HomePage>{
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()=> _dialogExitApp(context),
-      child: Center(
-          child: Text("Hello, MTToken"),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: <Widget>[Text("BTC"),Icon(Icons.arrow_drop_down)],
+          ),
         ),
+        body: Center(
+          child: Text("home page"),
+        ),
+      )
     );
   }
 
