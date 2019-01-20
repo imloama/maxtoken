@@ -18,4 +18,10 @@ class ZhCNString extends BaseString{
 
   String app_back_tip = "确定要退出应用？";
 
+  String home = "Home";
+
+  String explore = "Explore";
+
+  String my = "My";
+
 }

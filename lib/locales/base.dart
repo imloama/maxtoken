@@ -15,4 +15,11 @@ abstract class BaseString {
   String cancel;
 
   String app_back_tip;
+  
+  String home;
+
+  String explore;
+
+  String my;
+
 }

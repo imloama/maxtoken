@@ -18,4 +18,11 @@ class EnString extends BaseString{
 
   String app_back_tip = "Exit ?";
 
+  String home = "Home";
+
+  String explore = "Explore";
+
+  String my = "My";
+
+
 }

@@ -24,13 +24,15 @@ class _IndexPageState extends State<IndexPage>{
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          // title:,
+          title:Text(Commons.getLocale(context).home),
           icon: Icon(Icons.home)
         ),
         BottomNavigationBarItem(
+          title:Text(Commons.getLocale(context).explore),
           icon: Icon(Icons.explore)
         ),
         BottomNavigationBarItem(
+          title:Text(Commons.getLocale(context).my),
           icon: Icon(Icons.person)
         )
       ],
