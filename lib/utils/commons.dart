@@ -234,7 +234,7 @@ class Commons {
                       children: <Widget>[
                         new Container(child: SpinKitCubeGrid(color: Color(0xFFFFFF))),
                         new Container(height: 10.0),
-                        new Container(child: new Text(Commons.getLocale(context).loading_text, style: MTTheme.LightText)),
+                        new Container(child: new Text(Commons.getLocale(context).loading_text, style: kDarkMTTheme.data.textTheme.title)),
                       ],
                     ),
                   ),

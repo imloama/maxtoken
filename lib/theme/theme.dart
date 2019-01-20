@@ -4,36 +4,79 @@ import 'package:flutter/material.dart';
 
 
 class MTTheme{
-
-  static const MaterialColor LightTheme = const MaterialColor(
-    0x000000,
-     const <int, Color>{
-      50:  const Color(0xEEEEEE),
-      100: const Color(0xEEEEEE),
-      200: const Color(0xEEEEEE),
-      300: const Color(0xEEEEEE),
-      400: const Color(0xEEEEEE),
-      500: const Color(0x000000),
-      600: const Color(0xFFFFFF),
-      700: const Color(0xFFFFFF),
-      800: const Color(0xFFFFFF),
-      900: const Color(0xFFFFFF),
-    },
-
-  );
-
-  static const lagerTextSize = 30.0;
-  static const bigTextSize = 23.0;
-  static const normalTextSize = 18.0;
-  static const middleTextWhiteSize = 16.0;
-  static const smallTextSize = 14.0;
-  static const minTextSize = 12.0;
-
-static const LightText = TextStyle(
-    color: Color(0xFFFFFF),
-    fontSize: normalTextSize,
-  );
+  const MTTheme._(this.name, this.data);
+  final String name;
+  final ThemeData data;
 
 }
 
+final MTTheme kDarkMTTheme = MTTheme._('Dark', _buildDarkTheme());
+final MTTheme kLightMTTheme = MTTheme._('Light', _buildLightTheme());
 
+
+TextTheme _buildTextTheme(TextTheme base) {
+    return base.copyWith(
+      title: base.title.copyWith(
+        fontFamily: 'GoogleSans',
+      ),
+    );
+  }
+
+
+
+  ThemeData _buildDarkTheme() {
+    const Color primaryColor = Color(0xFF0175c2);
+    const Color secondaryColor = Color(0xFF13B9FD);
+    final ThemeData base = ThemeData.dark();
+    final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
+      primary: primaryColor,
+      secondary: secondaryColor,
+    );
+    return base.copyWith(
+      primaryColor: primaryColor,
+      buttonColor: primaryColor,
+      indicatorColor: Colors.white,
+      accentColor: secondaryColor,
+      canvasColor: const Color(0xFF202124),
+      scaffoldBackgroundColor: const Color(0xFF202124),
+      backgroundColor: const Color(0xFF202124),
+      errorColor: const Color(0xFFB00020),
+      buttonTheme: ButtonThemeData(
+        colorScheme: colorScheme,
+        textTheme: ButtonTextTheme.primary,
+      ),
+      textTheme: _buildTextTheme(base.textTheme),
+      primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
+      accentTextTheme: _buildTextTheme(base.accentTextTheme),
+    );
+  }
+
+  ThemeData _buildLightTheme() {
+    const Color primaryColor = Color(0xFF0175c2);
+    const Color secondaryColor = Color(0xFF13B9FD);
+    final ColorScheme colorScheme = const ColorScheme.light().copyWith(
+      primary: primaryColor,
+      secondary: secondaryColor,
+    );
+    final ThemeData base = ThemeData.light();
+    return base.copyWith(
+      colorScheme: colorScheme,
+      primaryColor: primaryColor,
+      buttonColor: primaryColor,
+      indicatorColor: Colors.white,
+      splashColor: Colors.white24,
+      splashFactory: InkRipple.splashFactory,
+      accentColor: secondaryColor,
+      canvasColor: Colors.white,
+      scaffoldBackgroundColor: Colors.white,
+      backgroundColor: Colors.white,
+      errorColor: const Color(0xFFB00020),
+      buttonTheme: ButtonThemeData(
+        colorScheme: colorScheme,
+        textTheme: ButtonTextTheme.primary,
+      ),
+      textTheme: _buildTextTheme(base.textTheme),
+      primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
+      accentTextTheme: _buildTextTheme(base.accentTextTheme),
+    );
+  }

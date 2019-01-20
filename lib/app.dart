@@ -18,10 +18,7 @@ class MaxTokenApp extends StatelessWidget{
     appReducer,
     initialState: AppState(
       wallets: List(),
-      themeData: new ThemeData(
-            primarySwatch: MTTheme.LightTheme,
-            platform: TargetPlatform.android,//fix #192
-        ),
+      themeData: kDarkMTTheme.data,
         locale: Locale('zh', 'CH')
       ),
   );
