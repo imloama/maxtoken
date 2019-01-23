@@ -27,9 +27,10 @@ TextTheme _buildTextTheme(TextTheme base) {
 
 
   ThemeData _buildDarkTheme() {
-    //#1F8CE1 图标颜色，31 140 225,  0xFF1f8ce1
-    const Color primaryColor = Color(0xFF0175c2);//#0175C2
-    const Color secondaryColor = Color(0xFF13B9FD);//#13B9FD
+    //#448AFF 图标颜色，
+    //#64b5f6
+    const Color primaryColor = Color(0xFF448AFF);// Color(0xFF0175c2);//#0175C2
+    const Color secondaryColor = Color(0xFF64b5f6);//Color(0xFF13B9FD);//#13B9FD
     final ThemeData base = ThemeData.dark();
     final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
       primary: primaryColor,
