@@ -54,6 +54,7 @@ dependencies:
   bitcoin_flutter: ^1.0.3
   stellar: ^0.3.2
   ethereum: ^3.1.0
+  bip39: ^1.0.3
 
 
 dev_dependencies:
