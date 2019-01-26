@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:maxtoken/service/blockchain.dart';
 import 'package:stellar/stellar.dart';
 import 'package:bip39/bip39.dart' as bip39;
@@ -10,7 +12,7 @@ class KeyPairs{
   static KeyPairData random(BlockChainType type){
     switch(type){
       case BlockChainType.Stellar:
-        return _randomForStellar();
+        return null;//randomForStellar();
         break;
       case BlockChainType.BitCoin:
         break;
@@ -22,8 +24,8 @@ class KeyPairs{
     return null;
   }
 
-  static Future<KeyPairData> _randomForStellar() async {
-      //KeyPair kp = KeyPair.random();
+  static Future<KeyPairData> randomForStellar({int index = 0}) async {
+      // KeyPair kp = KeyPair.random();
       final  mnemonic = await bip39.generateMnemonic();
       final  seed = bip39.mnemonicToSeed(mnemonic);
       final secret = seed.map((byte) {
@@ -31,16 +33,16 @@ class KeyPairs{
       }).join('');
       //ed25519-hd-key
       final root = bip32.BIP32.fromSeed(seed);
-      final node = root.derivePath("m/44'/148'/0'");
-      //ed25519
-      final address = getAddress();
-
+      final path = "m/44'/148'/$index'";
+      final node = root.derivePath(path);
+      KeyPair kp = KeyPair.fromSecretSeedList(seed);
       return KeyPairData(
         mnemonic: mnemonic,
-        publicKey: address,
-        secret: secret
+        publicKey: kp.accountId,
+        secret: kp.secretSeed,
       );
   }
+
 
   static Future<KeyPairData> _randomForBitcoin() async {
     // Only support BIP39 English word list
@@ -53,7 +55,6 @@ class KeyPairs{
       //ed25519-hd-key
       final root = bip32.BIP32.fromSeed(seed);
       final address = getBTCAddress(root.derivePath("m/0'/0/0"));
-
       return KeyPairData(
         mnemonic: mnemonic,
         publicKey: address,
@@ -61,9 +62,10 @@ class KeyPairs{
       );
   }
 
-  static String getBTCAddress (node, [network]) {
+  static String getBTCAddress (bip32.BIP32 node, [network]) {
     return P2PKH(data: new P2PKHData(pubkey: node.publicKey), network: network).data.address;
   }
+
 
 }
 
