@@ -9,7 +9,7 @@ import 'package:bitcoin_flutter/src/payments/p2pkh.dart';
 
 class KeyPairs{
 
-  
+
 
   static KeyPairData random(BlockChainType type){
     switch(type){
@@ -56,7 +56,7 @@ class KeyPairs{
       }).join('');
       //ed25519-hd-key
       final root = bip32.BIP32.fromSeed(seed);
-      final address = getBTCAddress(root.derivePath("m/0'/0/0"));
+      final address = getBTCAddress(root.derivePath("m/0'/0'/0'"));
       return KeyPairData(
         mnemonic: mnemonic,
         publicKey: address,
