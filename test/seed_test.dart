@@ -3,18 +3,19 @@ import 'package:stellar/stellar.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:bitcoin_flutter/src/payments/p2pkh.dart';
+import 'package:bitcoin_flutter/bitcoin_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
 
-testStellar().then((data){
-  print("ok");
-}).catchError((err){
-  print(err);
-});
+// testStellar().then((data){
+//   print("ok");
+// }).catchError((err){
+//   print(err);
+// });
    
-
+testBtc();
 }
 
 Future testStellar() async {
@@ -31,4 +32,14 @@ Future testStellar() async {
   print(mnemonic);
   print(kp.accountId);
   print(kp.secretSeed);
+}
+
+Future testBtc() async{
+  final mnemonic = "soda swift hawk market mercy acid minimum tip clip woman ridge height";
+  final  seed = bip39.mnemonicToSeed(mnemonic); 
+  var hdWallet = HDWallet.fromSeed(seed);
+  print(hdWallet.address);
+  print(hdWallet.pubKey);
+  print(hdWallet.privKey);
+  print(hdWallet.wif);
 }
