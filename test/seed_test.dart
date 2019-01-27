@@ -46,6 +46,7 @@ void testStellar2(){
   final node = root.derivePath("m/44'/148'/0'");
   print(HEX.encode(node.privateKey));
   print(HEX.encode(node.publicKey));
+  //参考 https://github.com/stellar/js-stellar-base/blob/master/src/keypair.js
   KeyPair kp = KeyPair.fromSecretSeedList(node.privateKey);
   print(kp.accountId);
   print(kp.secretSeed);
