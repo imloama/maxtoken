@@ -28,10 +28,15 @@ Future testStellar() async {
   //final  mnemonic = await bip39.generateMnemonic();
    final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
   final  seed = bip39.mnemonicToSeed(mnemonic);
+  print(HEX.encode(seed));
   //ed25519-hd-key
   final root = bip32.BIP32.fromSeed(seed);
   final node = root.derivePath("m/44'/148'/0'");
-  KeyPair kp = KeyPair.fromSecretSeedList(node.privateKey);
+  print(HEX.encode(node.fingerprint));
+  print(HEX.encode(node.identifier));
+  print(HEX.encode(node.privateKey));
+  print(HEX.encode(node.publicKey));
+  KeyPair kp = KeyPair.fromSecretSeedList(node.identifier);
   print(mnemonic);
   print(kp.accountId);//应该是： GCBERPX2R2QNKNKPL6HDKYZJE5ZONX6HOZUZBPZANUHJUG6N7KB6JDBE
   print(kp.secretSeed);
@@ -43,9 +48,12 @@ void testStellar2(){
   final seed = bip39.mnemonicToSeed(mnemonic);
   print(HEX.encode(seed));//正确
   final root = bip32.BIP32.fromSeed(seed);
-  final node = root.derivePath("m/44'/148'/0'");
-  print(HEX.encode(node.privateKey));
-  print(HEX.encode(node.publicKey));
+  var node = root.derivePath("m/44'/148'/0'");
+  print("1:"+HEX.encode(node.privateKey));
+  print("2:"+HEX.encode(node.publicKey));
+  // node = node.derive(0);
+  // print("3:"+HEX.encode(node.privateKey));
+  // print("4:"+HEX.encode(node.publicKey));
   //参考 https://github.com/stellar/js-stellar-base/blob/master/src/keypair.js
   KeyPair kp = KeyPair.fromSecretSeedList(node.privateKey);
   print(kp.accountId);
@@ -54,7 +62,7 @@ void testStellar2(){
 }
 
 Future testBtc() async{
-  final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
+  final mnemonic = "illness spike retreat truth genius clock brain pass fit cave bargain toe";
   final  seed = bip39.mnemonicToSeed(mnemonic); 
   var hdWallet = HDWallet.fromSeed(seed);
   print(hdWallet.address);
