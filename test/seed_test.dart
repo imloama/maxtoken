@@ -82,12 +82,15 @@ Uint8List createUint8ListFromString(String s) {
 const HIGHEST_BIT = 0x80000000;
 
 Uint8List drive(Uint8List seed, Uint8List chainCode, int index){
+  print("index===" + index.toString());
+  print("seed:" + HEX.encode(seed));
+  print("chainCode:" + HEX.encode(chainCode));
   var y = 2147483648 + index;
   Uint8List data = new Uint8List(37);
   data[0] = 0x00;
   data.setRange(1, 33, seed);
   data.buffer.asByteData().setUint32(33, y);
-
+  print("data==" + HEX.encode(data));
   SHA512Digest digest = SHA512Digest();
   KeyParameter parameter = new KeyParameter(chainCode);
   HMac hmac = HMac(digest,128);
@@ -130,10 +133,13 @@ void testStellar3(){
   print("right:"+right.length.toString()+","+HEX.encode(right));
 
   Uint8List i44 = drive(left, right, 44);
+  print("44:" + HEX.encode(i44));
   var i148 = drive(i44.sublist(0,32), i44.sublist(32), 148);
+  print("148:" + HEX.encode(i148));
   var i0 = drive(i148.sublist(0,32), i148.sublist(32), 0);
-  KeyPair kp = KeyPair.fromSecretSeedList(i0);
+  KeyPair kp = KeyPair.fromSecretSeedList(i0.sublist(0,32));
   print(kp.accountId);
+  print(kp.secretSeed);
 
 }
 
