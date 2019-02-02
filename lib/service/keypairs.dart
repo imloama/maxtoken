@@ -5,6 +5,7 @@ import 'package:stellar/stellar.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:bitcoin_flutter/src/payments/p2pkh.dart';
+import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 
 
 class KeyPairs{
@@ -28,16 +29,9 @@ class KeyPairs{
 
   static Future<KeyPairData> randomForStellar({int index = 0}) async {
       // KeyPair kp = KeyPair.random();
-      final  mnemonic = await bip39.generateMnemonic();
-      final  seed = bip39.mnemonicToSeed(mnemonic);
-      final secret = seed.map((byte) {
-        return byte.toRadixString(16).padLeft(2, '0');
-      }).join('');
-      //ed25519-hd-key
-      final root = bip32.BIP32.fromSeed(seed);
-      final path = "m/44'/148'/$index'";
-      final node = root.derivePath(path);
-      KeyPair kp = KeyPair.fromSecretSeedList(seed);
+      final mnemonic = StellarHDWallet.generateMnemonic();
+      final wallet = StellarHDWallet.fromMnemonic(mnemonic);
+      final kp = wallet.getKeyPair(index: index);
       return KeyPairData(
         mnemonic: mnemonic,
         publicKey: kp.accountId,
@@ -49,18 +43,16 @@ class KeyPairs{
   static Future<KeyPairData> _randomForBitcoin() async {
     // Only support BIP39 English word list
     // uses HEX strings for entropy
-    final  mnemonic = await bip39.generateMnemonic();
-      final  seed = bip39.mnemonicToSeed(mnemonic);
-      final secret = seed.map((byte) {
-        return byte.toRadixString(16).padLeft(2, '0');
-      }).join('');
-      //ed25519-hd-key
-      final root = bip32.BIP32.fromSeed(seed);
-      final address = getBTCAddress(root.derivePath("m/0'/0'/0'"));
+   final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
+    final seed = bip39.mnemonicToSeed(mnemonic); 
+    final root = bip32.BIP32.fromSeed(seed);
+    final path = root.derivePath("m/44'/0'/0'/0/0");
+    final data = new P2PKHData(pubkey: path.publicKey);
+    final p2pkh = P2PKH(data: data);
       return KeyPairData(
         mnemonic: mnemonic,
-        publicKey: address,
-        secret: secret
+        publicKey: p2pkh.data.address,
+        secret: path.toWIF()
       );
   }
 
