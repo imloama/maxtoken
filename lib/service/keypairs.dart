@@ -40,7 +40,7 @@ class KeyPairs{
   }
 
 
-  static Future<KeyPairData> _randomForBitcoin() async {
+  static Future<KeyPairData> randomForBitcoin() async {
     // Only support BIP39 English word list
     // uses HEX strings for entropy
    final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";

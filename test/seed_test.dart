@@ -16,60 +16,7 @@ import 'dart:typed_data';
 import 'dart:convert';
 
 void main() {
-
-// 结果不正确
-// testStellar().then((data){
-//   print("ok");
-// }).catchError((err){
-//   print(err);
-// });
-testStellar3();
-   
-// testBtc();
-
-// testBtc2();// 符合预期
 }
-
-
-Future testStellar() async {
-  //final  mnemonic = await bip39.generateMnemonic();
-   final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
-  final  seed = bip39.mnemonicToSeed(mnemonic);
-  print(HEX.encode(seed));
-  //ed25519-hd-key
-  final root = bip32.BIP32.fromSeed(seed);
-  final node = root.derivePath("m/44'/148'/0'");
-  print(HEX.encode(node.fingerprint));
-  print(HEX.encode(node.identifier));
-  print(HEX.encode(node.privateKey));
-  print(HEX.encode(node.publicKey));
-  KeyPair kp = KeyPair.fromSecretSeedList(node.identifier);
-  print(mnemonic);
-  print(kp.accountId);//应该是： GCBERPX2R2QNKNKPL6HDKYZJE5ZONX6HOZUZBPZANUHJUG6N7KB6JDBE
-  print(kp.secretSeed);
-}
-
-
-
-void testStellar2(){
-  //数据来自https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0005.md
-  final mnemonic = "illness spike retreat truth genius clock brain pass fit cave bargain toe";
-  final seed = bip39.mnemonicToSeed(mnemonic);
-  print(HEX.encode(seed));//正确
-  final root = bip32.BIP32.fromSeed(seed);
-  var node = root.derivePath("m/44'/148'/0'");
-  print("1:"+HEX.encode(node.privateKey));
-  print("2:"+HEX.encode(node.publicKey));
-  // node = node.derive(0);
-  // print("3:"+HEX.encode(node.privateKey));
-  // print("4:"+HEX.encode(node.publicKey));
-  //参考 https://github.com/stellar/js-stellar-base/blob/master/src/keypair.js
-  KeyPair kp = KeyPair.fromSecretSeedList(node.privateKey);
-  print(kp.accountId);
-  print(kp.secretSeed);
-
-}
-
 
 Uint8List createUint8ListFromString(String s) {
   var ret = new Uint8List(s.length);
@@ -102,7 +49,7 @@ Uint8List drive(Uint8List seed, Uint8List chainCode, int index){
   return output;
 }
 
-void testStellar3(){
+void testStellar(){
   //数据来自https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0005.md
   final mnemonic = "illness spike retreat truth genius clock brain pass fit cave bargain toe";
   final seed = bip39.mnemonicToSeed(mnemonic);
@@ -144,16 +91,6 @@ void testStellar3(){
 }
 
 Future testBtc() async{
-  final mnemonic = "illness spike retreat truth genius clock brain pass fit cave bargain toe";
-  final  seed = bip39.mnemonicToSeed(mnemonic); 
-  var hdWallet = HDWallet.fromSeed(seed);
-  print(hdWallet.address);
-  print(hdWallet.pubKey);
-  print(hdWallet.privKey);
-  print(hdWallet.wif);
-}
-
-Future testBtc2() async{
   final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
   final seed = bip39.mnemonicToSeed(mnemonic); 
   final root = bip32.BIP32.fromSeed(seed);
@@ -165,4 +102,17 @@ Future testBtc2() async{
   // final privateKey = HEX.encode(path.privateKey);
   // print(privateKey);
   print(path.toWIF());
+}
+final int SEED_ITERATIONS = 2048;
+final int SEED_KEY_SIZE = 64;
+void testEth(String passphrase){
+  final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
+  passphrase = passphrase == null ? "" : passphrase;
+  String salt = "mnemonic$passphrase";
+  KeyDerivator derivator = new PBKDF2KeyDerivator(new HMac(new SHA512Digest(), 128));
+  Pbkdf2Parameters parameter = new Pbkdf2Parameters(utf8.encode(salt), SEED_ITERATIONS, SEED_KEY_SIZE);
+  derivator.init(parameter);
+  var masterSeedByteArray = derivator.process(utf8.encode(mnemonic));
+  final root = bip32.BIP32.fromPrivateKey(masterSeedByteArray.sublist(0,32), masterSeedByteArray.sublist(32));
+  final path = root.derivePath("m/44'/60'/0'/0/0");
 }
