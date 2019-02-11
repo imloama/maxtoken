@@ -105,14 +105,37 @@ Future testBtc() async{
 }
 final int SEED_ITERATIONS = 2048;
 final int SEED_KEY_SIZE = 64;
+
 void testEth(String passphrase){
   final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
-  passphrase = passphrase == null ? "" : passphrase;
-  String salt = "mnemonic$passphrase";
-  KeyDerivator derivator = new PBKDF2KeyDerivator(new HMac(new SHA512Digest(), 128));
-  Pbkdf2Parameters parameter = new Pbkdf2Parameters(utf8.encode(salt), SEED_ITERATIONS, SEED_KEY_SIZE);
-  derivator.init(parameter);
-  var masterSeedByteArray = derivator.process(utf8.encode(mnemonic));
-  final root = bip32.BIP32.fromPrivateKey(masterSeedByteArray.sublist(0,32), masterSeedByteArray.sublist(32));
+  // passphrase = passphrase == null ? "" : passphrase;
+  // String salt = "mnemonic$passphrase";
+  // KeyDerivator derivator = new PBKDF2KeyDerivator(new HMac(new SHA512Digest(), 128));
+  // Pbkdf2Parameters parameter = new Pbkdf2Parameters(utf8.encode(salt), SEED_ITERATIONS, SEED_KEY_SIZE);
+  // derivator.init(parameter);
+  // var masterSeedByteArray = derivator.process(utf8.encode(mnemonic));
+  // final root = bip32.BIP32.fromPrivateKey(masterSeedByteArray.sublist(0,32), masterSeedByteArray.sublist(32));
+  // final path = root.derivePath("m/44'/60'/0'/0/0");
+  final seed = bip39.mnemonicToSeed(mnemonic); 
+  final root = bip32.BIP32.fromSeed(seed);
   final path = root.derivePath("m/44'/60'/0'/0/0");
+  Credentials fromHex = Credentials.fromPrivateKeyHex(HEX.encode(path.privateKey));
+
+  /**
+   hdkey js
+    var I = crypto.createHmac('sha512', MASTER_SECRET).update(seedBuffer).digest()
+  var IL = I.slice(0, 32)
+  var IR = I.slice(32)
+
+  var hdkey = new HDKey(versions)
+  hdkey.chainCode = IR
+  hdkey.privateKey = IL
+
+
+   let wallet = hdKey.getWallet();
+    let secret = wallet.getPrivateKeyString().substring(2);
+    let address = wallet.getChecksumAddressString();
+
+   */
+
 }
