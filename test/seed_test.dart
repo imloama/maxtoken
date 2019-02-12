@@ -1,5 +1,6 @@
 import 'package:maxtoken/service/blockchain.dart';
 import 'package:pointycastle/digests/sha512.dart';
+import 'package:pointycastle/digests/sha3.dart';
 import 'package:pointycastle/export.dart';
 import 'package:stellar/stellar.dart';
 import 'package:bip39/bip39.dart' as bip39;
@@ -13,9 +14,11 @@ import 'package:tweetnacl/tweetnacl.dart' as ed25519;
 // import 'package:crypto/crypto.dart';
 import "package:pointycastle/pointycastle.dart";
 import 'dart:typed_data';
-import 'dart:convert';
+import 'package:convert/convert.dart';
+import 'package:pointycastle/src/utils.dart' as p_utils;
 
 void main() {
+  testEth();
 }
 
 Uint8List createUint8ListFromString(String s) {
@@ -106,7 +109,7 @@ Future testBtc() async{
 final int SEED_ITERATIONS = 2048;
 final int SEED_KEY_SIZE = 64;
 
-void testEth(String passphrase){
+void testEth(){
   final mnemonic = "praise you muffin lion enable neck grocery crumble super myself license ghost";
   // passphrase = passphrase == null ? "" : passphrase;
   // String salt = "mnemonic$passphrase";
@@ -117,9 +120,41 @@ void testEth(String passphrase){
   // final root = bip32.BIP32.fromPrivateKey(masterSeedByteArray.sublist(0,32), masterSeedByteArray.sublist(32));
   // final path = root.derivePath("m/44'/60'/0'/0/0");
   final seed = bip39.mnemonicToSeed(mnemonic); 
+  print(HEX.encode(seed));
   final root = bip32.BIP32.fromSeed(seed);
+  print("root:" + HEX.encode(root.privateKey));
   final path = root.derivePath("m/44'/60'/0'/0/0");
-  Credentials fromHex = Credentials.fromPrivateKeyHex(HEX.encode(path.privateKey));
+  //Credentials fromHex = Credentials.fromPrivateKeyHex(HEX.encode(path.privateKey));
+  // print(HEX.encode(path.privateKey));
+  print(path.privateKey.length);
+  print(path.toBase58());//正确
+  print("0x"+HEX.encode(path.publicKey));//正确
+
+  var secretHex = "0x"+HEX.encode(path.privateKey);
+  print(secretHex);//正确
+  
+  //输出地址
+  var pubkey = HEX.encode(path.publicKey).toLowerCase();
+
+  //ECCurve_secp256k1 secp256k1 = ECCurve_secp256k1();
+  SHA3Digest keccak = SHA3Digest(256);
+  var address = keccak.process(HEX.decode(pubkey));
+  //print(HEX.encode(address));
+  address = address.sublist(address.length-20);
+  print(address.length);
+  //print(HEX.encode(address));
+  Uint8List list = Uint8List(20);
+  // for (var item in address) {
+  //   if(item<)
+  // }
+
+
+  //var number = bytesToInt(path.publicKey);
+  //print("number:" + number.toString());
+  //print(toHex(number,pad: true, forcePadLen: _ethAddLenBytes * 2, include0x: true));
+  //print(HEX.encode(privateKeyToPublic(path.privateKey)));
+
+
 
   /**
    hdkey js
@@ -139,3 +174,50 @@ void testEth(String passphrase){
    */
 
 }
+const int _ethAddLenBytes = 20;
+
+List<int> numberToBytes(dynamic number) {
+  if (number is BigInt)
+    return p_utils.encodeBigInt(number);
+
+	var hexString = toHex(number, pad: true);
+	return hex.decode(hexString);
+}
+final ECDomainParameters params = new ECCurve_secp256k1();
+Uint8List privateKeyToPublic(Uint8List privateKey) {
+	var privateKeyNum = bytesToInt(privateKey);
+	var p = params.G * privateKeyNum;
+
+	//skip the type flag, https://github.com/ethereumjs/ethereumjs-util/blob/master/index.js#L319
+	return p.getEncoded(false).sublist(1);
+}
+
+ BigInt _privateKeyToPublic(BigInt private) {
+    var privateKeyBytes = numberToBytes(private);
+    var publicKeyBytes = privateKeyToPublic(privateKeyBytes);
+    return bytesToInt(publicKeyBytes);
+  }
+
+BigInt bytesToInt(List<int> bytes) => p_utils.decodeBigInt(bytes);
+
+String toHex(dynamic number, {bool pad = false, bool include0x = false, int forcePadLen}) {
+	String toHexSimple() {
+		if (number is int)
+			return number.toRadixString(16);
+		else if (number is BigInt)
+			return number.toRadixString(16);
+		else
+			throw new TypeError();
+	}
+
+	var hexString = toHexSimple();
+	if (pad && !hexString.length.isEven)
+		hexString = "0$hexString";
+  if (forcePadLen != null)
+    hexString = hexString.padLeft(forcePadLen, "0");
+	if (include0x)
+		hexString = "0x$hexString";
+
+	return hexString;
+}
+
