@@ -126,7 +126,7 @@ void testEth(){
   final path = root.derivePath("m/44'/60'/0'/0/0");
   //Credentials fromHex = Credentials.fromPrivateKeyHex(HEX.encode(path.privateKey));
   // print(HEX.encode(path.privateKey));
-  print(path.privateKey.length);
+  print(path.publicKey.length);
   print(path.toBase58());//正确
   print("0x"+HEX.encode(path.publicKey));//正确
 
@@ -134,11 +134,13 @@ void testEth(){
   print(secretHex);//正确
   
   //输出地址
-  var pubkey = HEX.encode(path.publicKey).toLowerCase();
+  //var pubkey = HEX.encode(path.publicKey).toLowerCase();
 
-  //ECCurve_secp256k1 secp256k1 = ECCurve_secp256k1();
+  ECCurve_secp256k1 secp256k1 = ECCurve_secp256k1();
+  
+  
   SHA3Digest keccak = SHA3Digest(256);
-  var address = keccak.process(HEX.decode(pubkey));
+  var address = keccak.process(path.publicKey);//HEX.decode(pubkey));
   //print(HEX.encode(address));
   address = address.sublist(address.length-20);
   print(address.length);
