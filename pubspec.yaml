@@ -52,12 +52,18 @@ dependencies:
   flutter_secure_storage: ^3.1.3
   
   bitcoin_flutter: ^1.0.3
-  #stellar: ^0.3.2
+  stellar:
+    git:
+      url: git@github.com:imloama/dart-stellar-sdk.git
   ethereum: ^3.1.0
   bip39: ^1.0.3
   bip32: ^1.0.5
-  #stellar_hd_wallet: ^1.0.0
+  stellar_hd_wallet:
+    git:
+      url: git@github.com:imloama/dart-stellar-hd-wallet.git
+      ref: dev
   web3dart: ^0.4.5
+  # http: ^0.12.0+1
 
 
 dev_dependencies:
