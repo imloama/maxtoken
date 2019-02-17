@@ -1,5 +1,4 @@
 import 'package:web3dart/web3dart.dart';
-import 'package:web3dart/src/wallet/credential.dart';
 import 'package:maxtoken/service/service.dart';
 import 'package:hex/hex.dart';
 import 'package:bip39/bip39.dart' as bip39;
@@ -26,4 +25,5 @@ class EthereumAddress extends Address{
     this.secret = HEX.encode(path.privateKey);
     this.address = Credentials.fromPrivateKeyHex(this.secret).address.hexEip55;
   }
+  
 }

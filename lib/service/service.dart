@@ -1,4 +1,8 @@
+import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
+import 'package:bip39/bip39.dart' as bip39;
+abstract class Service{
 
+}
 
 
 abstract class Address{
@@ -21,6 +25,13 @@ abstract class Address{
   Address.fromMnemonic(String mnemonic,[int index = 0]){
     this.mnemonic = mnemonic;
     this.index = index;
+  }
+
+  ///生成随机助记词
+  static String random({int strength = ENTROPY_BITS_HALF,
+      language = 'english',
+      bip39.RandomBytes random}){
+    return StellarHDWallet.generateMnemonic(strength: strength, language: language, random: random);
   }
 
 
