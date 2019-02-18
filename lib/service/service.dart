@@ -1,6 +1,11 @@
 import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 import 'package:bip39/bip39.dart' as bip39;
+import 'package:maxtoken/model/asset.dart';
+
 abstract class Service{
+
+  /// 查询余额
+  Future<List<Asset>> getBalance(String address);
 
 }
 
