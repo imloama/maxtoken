@@ -3,6 +3,7 @@ import 'package:maxtoken/service/service.dart';
 import 'package:stellar/stellar.dart' as stellar;
 import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 import 'package:maxtoken/model/asset.dart';
+import 'package:maxtoken/model/account.dart';
 
 /// 恒生服务功能
 class StellarService extends Service{
@@ -26,10 +27,44 @@ class StellarService extends Service{
   }
 
   @override
-  Future<List<Asset>> getBalance(String address) async {
+  Future<Account> getBalance(String address) async {
     final kp =stellar.KeyPair.fromAccountId(address);
     final account = await this._server.accounts.account(kp);
-    return null;
+    final balances = account.balances;
+    List<Asset> assets =List();
+    balances.forEach((b){
+      String code = null,issuer=null,host=null;
+      bool isNative = false;
+      if(b.assetCode!=null){
+        code = 'XLM';
+        host = 'stellar.org';
+        isNative = true;
+      }else{
+        code = b.assetCode;
+        issuer = b.assetIssuer.accountId;
+      }
+      final asset = StellarAsset(code,issuer,host,isNative,b.balance);
+      asset.limit = b.limit;
+      asset.buyingLiabilities = b.buyingLiabilities;
+      asset.sellingLiabilities = b.sellingLiabilities;
+      asset.assetType = b.assetType;
+      assets.add(asset);
+    });
+    final result = StellarAccount(address, assets);
+    result.sequenceNumber = account.sequenceNumber;
+    result.subentryCount = account.subentryCount;
+    result.inflationDestination = account.inflationDestination;
+    result.thresholds = {
+      "low_threshold": account.thresholds.lowThreshold,
+      "med_threshold": account.thresholds.medThreshold,
+      "high_threshold": account.thresholds.medThreshold,
+    };
+    result.flags = {
+      "auth_required": account.flags.authRequired,
+      "auth_revocable": account.flags.authRevocable,
+      "auth_immutable": account.flags.authImmutable
+    };
+    return result;
   }
 
   

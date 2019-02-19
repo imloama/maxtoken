@@ -11,5 +11,16 @@ class Asset {
   bool isNative;
   /// 余额展示
   String balance;
+  /// 其他数据，针对恒星系，包括limit、buying_liabilities、selling_liabilities、asset_type
+  Map<String,String> data = Map();
   Asset(this.code,this.issuer, this.host, this.isNative,this.balance);
+}
+
+
+class StellarAsset extends Asset{
+  StellarAsset(String code, String issuer, String host, bool isNative, String balance) : super(code, issuer, host, isNative, balance);
+  String limit;
+  String buyingLiabilities;
+  String sellingLiabilities;
+  String assetType;
 }
