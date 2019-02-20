@@ -1,9 +1,11 @@
 import 'package:maxtoken/model/asset.dart';
+import 'package:maxtoken/model/transaction.dart';
 import 'package:maxtoken/service/service.dart';
 import 'package:stellar/stellar.dart' as stellar;
 import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 import 'package:maxtoken/model/asset.dart';
 import 'package:maxtoken/model/account.dart';
+import 'package:maxtoken/model/transaction.dart';
 
 /// 恒生服务功能
 class StellarService extends Service{
@@ -23,12 +25,11 @@ class StellarService extends Service{
       stellar.Network.usePublicNetwork();
     }
     this._server = new stellar.Server(this._horizon);
-    
   }
 
   @override
   Future<Account> getBalance(String address) async {
-    final kp =stellar.KeyPair.fromAccountId(address);
+    final kp = stellar.KeyPair.fromAccountId(address);
     final account = await this._server.accounts.account(kp);
     final balances = account.balances;
     List<Asset> assets =List();
@@ -66,6 +67,33 @@ class StellarService extends Service{
     };
     return result;
   }
+
+  @override
+  Future<Transaction> getTransactionByHash(String hash) async{
+    final tx = await this._server.transactions.transaction(hash);
+    StellarTransaction stx =StellarTransaction();
+    stx.hash =hash;
+    stx.ledger = tx.ledger;
+    // stx.memo = tx.memo.
+    stx.operationCount = tx.operationCount;
+    stx.pagingToken = tx.pagingToken;
+    stx.resultMetaXdr = tx.resultMetaXdr;
+    stx.resultXdr = tx.resultXdr;
+    stx.sourceAccount = tx.sourceAccount.accountId;
+    stx.sourceAccountSequence = tx.sourceAccountSequence;
+    
+    return stx;
+  }
+
+  @override
+  Future<String> postTransaction(Transaction trans) {
+    // stellar.Transaction tx = stellar.TransactionBuilder();
+    // this._server.submitTransaction()
+    return null;
+  }
+
+  stellar.Server get server => this._server;
+  
 
   
 }
