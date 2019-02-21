@@ -12,7 +12,7 @@ abstract class Service{
   Future<Transaction> getTransactionByHash(String hash);
   
   /// 提交事务
-  Future<String> postTransaction(Transaction trans);
+  Future<String> postTransaction(Object tx);
   
 
 }
