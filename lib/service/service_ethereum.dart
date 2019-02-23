@@ -31,15 +31,29 @@ class EthereumService extends Service{
   }
 
   @override
-  Future<Transaction> getTransactionByHash(String hash) {
-    
-    return null;
+  Future<Transaction> getTransactionByHash(String hash) async {
+    final tx = await this._client.getTransactionByHash(hash);
+    EthereumTransaction transaction =EthereumTransaction();
+    transaction.hash = hash;
+    transaction.block = tx.blockNumber.blockNum.toString();
+    transaction.gas = tx.gas;
+    transaction.gasPrice = tx.gasPrice.getInEther.toInt();
+    transaction.input = tx.input;
+
+    return transaction;
   }
 
   @override
-  Future<String> postTransaction(Object tx) {
-    // TODO: implement postTransaction
-    return null;
+  Future<String> postTransaction(String target,String secret,int gas,Object amount) async{
+    var credentials = web3dart.Credentials.fromPrivateKeyHex(secret);
+    final transaction = new web3dart.Transaction(
+      keys: credentials, maximumGas: gas
+    );
+    List<int> result = await transaction.prepareForSimpleTransaction(
+      new web3dart.EthereumAddress(target), // your target address 
+      web3dart.EtherAmount.fromUnitAndValue(web3dart.EtherUnit.finney, amount)
+    ).send(this._client);
+    return HEX.encode(result);
   }
 
 

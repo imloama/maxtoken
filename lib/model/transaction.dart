@@ -1,6 +1,8 @@
 
 class Transaction{
   String hash;
+  String block;
+ 
 }
 
 class StellarTransaction extends Transaction {
@@ -17,4 +19,11 @@ class StellarTransaction extends Transaction {
   String resultMetaXdr;
   String memoType;
   String memo;
+}
+
+class EthereumTransaction extends Transaction{
+  int gas;
+	int gasPrice;
+	List<int> input;
+	String value;
 }

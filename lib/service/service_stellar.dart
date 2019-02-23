@@ -86,7 +86,7 @@ class StellarService extends Service{
   }
 
   @override
-  Future<String> postTransaction(Object tx) async {
+  Future<String> postTransaction(String target,String secret,int gas,Object tx) async {
     // stellar.Transaction tx = stellar.TransactionBuilder();
     final response = await this._server.submitTransaction(tx);
     if(response.success){
