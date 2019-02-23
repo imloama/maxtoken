@@ -24,3 +24,15 @@ class StellarAsset extends Asset{
   String sellingLiabilities;
   String assetType;
 }
+
+class EthereumAsset extends Asset{
+  
+  EthereumAsset(String code, String issuer, String host, bool isNative, String balance) : super(code, issuer, host, isNative, balance);
+
+
+}
+
+class EthereumNativeAsset extends EthereumAsset{
+  EthereumNativeAsset(String balance) : super('ETH', null, null, true, balance) ;
+
+}

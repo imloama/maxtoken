@@ -27,3 +27,8 @@ class StellarAccount extends Account{
 
 
 }
+
+class EthereumAccount extends Account{
+  EthereumAccount(String address, List<Asset> balances) : super(address, balances);
+
+}
