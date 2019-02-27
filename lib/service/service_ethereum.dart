@@ -56,7 +56,9 @@ class EthereumService extends Service{
     return HEX.encode(result);
   }
 
-
+  Future<List<Transaction>> getTransactons(Map params) async{
+    return null;
+  }
   
 
 }

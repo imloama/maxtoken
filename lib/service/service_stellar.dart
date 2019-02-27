@@ -94,6 +94,44 @@ class StellarService extends Service{
     }
     return null;
   }
+  
+  @override
+  Future<List<Transaction>> getTransactons(Map params) async{
+    var cursor = params['curos'];
+    var limit = params['limit'];
+    var tx = this._server.transactions;
+    if(cursor!=null){
+      tx = tx.cursor(cursor);
+    }
+    limit = limit == null ? 100 : limit;
+    tx = tx.limit(limit);
+    var order = params['order'];
+    order =order == null ? "desc":order;
+    var result = await tx.order(order).execute();
+    var records = result.records;
+    List<Transaction> txs =List();
+    for(int i=0,n=records.length; i<n;i++){
+      var record =records[i];
+      StellarTransaction t = StellarTransaction();
+      t.block =record.ledger.toString();
+      t.createdAt =record.createdAt;
+      t.envelopeXdr =record.envelopeXdr;
+      t.feePaid =record.feePaid;
+      t.hash =record.hash;
+      t.ledger =record.ledger;
+      t.memo =record.memo.toXdr().text;
+      t.memoType =record.memo.toXdr().discriminant.value;
+      t.operationCount =record.operationCount;
+      t.pagingToken =record.pagingToken;
+      t.resultMetaXdr =record.resultMetaXdr;
+      t.resultXdr =record.resultXdr;
+      t.sourceAccount =record.sourceAccount.accountId;
+      t.sourceAccountSequence =record.sourceAccountSequence;
+      txs.add(t);
+    }
+
+    return txs;
+  }
 
   stellar.Server get server => this._server;
   

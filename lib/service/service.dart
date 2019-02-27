@@ -10,6 +10,9 @@ abstract class Service{
 
   /// 查询事务
   Future<Transaction> getTransactionByHash(String hash);
+
+  /// 查询事务列表
+  Future<List<Transaction>> getTransactons(Map params);
   
   /// 提交事务
   Future<String> postTransaction(String target,String secret,int gas,Object tx);
