@@ -1,7 +1,8 @@
 # maxToken
 A free and feature-rich digital asset wallet enabling multi-chain(BTC\ETH\EOS\XLM\XRP) asset management like imToken
 
-
+WIP
+This Project is on developing, not working well.
 
 ### UE
 [UE](https://free.modao.cc/app/QETyN7mgKzSvRsADDwQHZ6EHfmTf2h9)
