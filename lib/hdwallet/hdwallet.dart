@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:pointycastle/digests/sha512.dart';
 import 'package:pointycastle/export.dart';
-import 'package:stellar/stellar.dart';
+// import 'package:stellar/stellar.dart';
+import 'package:maxtoken/hdwallet/kp.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import "package:pointycastle/pointycastle.dart";
 import 'dart:typed_data';

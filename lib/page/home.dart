@@ -48,11 +48,15 @@ class _HomePageState extends State<HomePage>{
     print(seedhex);
     print(pathhex);
     final keypair = wallet.getKeyPair();
+    final pubkeyhex = HEX.encode(keypair.publicKey);
+    final prikeyhex = HEX.encode(keypair.privateKey);
     return Column(
       children: <Widget>[
         Text("seedhex:" + seedhex),
         Text("path:"+path),
         Text("pathhex:" + pathhex),
+        Text("pubkeyhex:" + pubkeyhex),
+        Text("prikeyhex:" + prikeyhex),
         Text("accountid:" + keypair.accountId)
       ],
     );

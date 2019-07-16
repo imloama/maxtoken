@@ -29,6 +29,11 @@ void main(){
     print(seedhex);
     print(pathhex);
     final keypair = wallet.getKeyPair();
+    final pubkeyhex = HEX.encode(keypair.publicKey);
+    print("pubkeyhex:" + pubkeyhex);
+    print("prikeyhex:" + HEX.encode(keypair.privateKey));
+    
+
     /*
     expect(keypair.accountId,
         "GDRXE2BQUC3AZNPVFSCEZ76NJ3WWL25FYFK6RGZGIEKWE4SOOHSUJUJ6");
