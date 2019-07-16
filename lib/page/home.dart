@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maxtoken/utils/commons.dart';
 import 'package:maxtoken/theme/theme.dart';
-
+import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 
 /**
  * home page
@@ -34,6 +34,14 @@ class _HomePageState extends State<HomePage>{
             ));
   }
 
+  Widget _body(){
+    final mnemonic =
+        "illness spike retreat truth genius clock brain pass fit cave bargain toe";
+    final wallet = StellarHDWallet.fromMnemonic(mnemonic);
+    final keypair = wallet.getKeyPair();
+    return Text(keypair.accountId);
+  }
+
   @override 
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -45,7 +53,7 @@ class _HomePageState extends State<HomePage>{
           ),
         ),
         body: Center(
-          child: Text("home page"),
+          child: _body(),//Text("home page"),
         ),
       )
     );
