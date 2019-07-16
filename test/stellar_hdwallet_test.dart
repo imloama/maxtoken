@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
-
+// import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
+import 'package:maxtoken/hdwallet/hdwallet.dart';
+import 'package:hex/hex.dart';
+/*
 void main() {
   test('get account id from mnemonic', () {
     final mnemonic =
@@ -16,4 +18,19 @@ void main() {
     // expect(wallet.getSecretSeed(index: 1),
     //     "SCEPFFWGAG5P2VX5DHIYK3XEMZYLTYWIPWYEKXFHSK25RVMIUNJ7CTIS");
   });
+}
+*/
+void main(){
+  final mnemonic =
+        "illness spike retreat truth genius clock brain pass fit cave bargain toe";
+    final wallet = StellarHDWallet.fromMnemonic(mnemonic);
+    final seedhex = HEX.encode(wallet.seed);
+    final pathhex = HEX.encode(wallet.derivePath("m/44'/148'/0'").sublist(0,32));
+    print(seedhex);
+    print(pathhex);
+    final keypair = wallet.getKeyPair();
+    /*
+    expect(keypair.accountId,
+        "GDRXE2BQUC3AZNPVFSCEZ76NJ3WWL25FYFK6RGZGIEKWE4SOOHSUJUJ6");
+        */
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maxtoken/utils/commons.dart';
 import 'package:maxtoken/theme/theme.dart';
-import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
+// import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
+import 'package:maxtoken/hdwallet/hdwallet.dart';
+import 'package:hex/hex.dart';
 
 /**
  * home page
@@ -38,8 +40,22 @@ class _HomePageState extends State<HomePage>{
     final mnemonic =
         "illness spike retreat truth genius clock brain pass fit cave bargain toe";
     final wallet = StellarHDWallet.fromMnemonic(mnemonic);
+    final index = 0;
+    final path = "m/44'/148'/$index'";
+    print(path);
+    final seedhex = HEX.encode(wallet.seed);
+    final pathhex = HEX.encode(wallet.derivePath("m/44'/148'/0'").sublist(0,32));
+    print(seedhex);
+    print(pathhex);
     final keypair = wallet.getKeyPair();
-    return Text(keypair.accountId);
+    return Column(
+      children: <Widget>[
+        Text("seedhex:" + seedhex),
+        Text("path:"+path),
+        Text("pathhex:" + pathhex),
+        Text("accountid:" + keypair.accountId)
+      ],
+    );
   }
 
   @override 
