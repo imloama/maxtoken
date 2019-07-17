@@ -1,4 +1,5 @@
-import 'package:tweetnacl/tweetnacl.dart' as ed25519;
+// import 'package:tweetnacl/tweetnacl.dart' as ed25519;
+import 'package:maxtoken/hdwallet/ed25519.dart' as ed25519;
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart' as fixNum;
 import "package:stellar/src/base32.dart";
