@@ -138,6 +138,8 @@ class KeyPair {
   static KeyPair fromSecretSeedList(Uint8List seed) {
     _mPrivateKey_seed = seed;
     ed25519.KeyPair kp = ed25519.Signature.keyPair_fromSeed(seed);
+    print("secretKey: \"${ed25519.TweetNaclFast.hexEncodeToString(kp.secretKey)}\"");
+    print("publicKey: \"${ed25519.TweetNaclFast.hexEncodeToString(kp.publicKey)}\"");
     return new KeyPair(kp.publicKey, kp.secretKey);
   }
 
