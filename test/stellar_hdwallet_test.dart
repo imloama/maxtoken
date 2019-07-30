@@ -1,7 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 // import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 import 'package:maxtoken/hdwallet/hdwallet.dart';
+import 'package:maxtoken/hdwallet/kp.dart';
+import 'package:maxtoken/hdwallet/ed25519.dart' as ed25519;
 import 'package:hex/hex.dart';
+import 'dart:typed_data';
+
 /*
 void main() {
   test('get account id from mnemonic', () {
@@ -25,13 +29,32 @@ void main(){
         "illness spike retreat truth genius clock brain pass fit cave bargain toe";
     final wallet = StellarHDWallet.fromMnemonic(mnemonic);
     final seedhex = HEX.encode(wallet.seed);
-    final pathhex = HEX.encode(wallet.derivePath("m/44'/148'/0'").sublist(0,32));
-    print(seedhex);
-    print(pathhex);
-    final keypair = wallet.getKeyPair();
+    final key = wallet.derivePath("m/44'/148'/0'");
+    final seedlist = key.sublist(0,32);
+    final pathhex = HEX.encode(seedlist);
+    final keypair = KeyPair.fromSecretSeedList(seedlist);
+    
+    // final keypair = wallet.getKeyPair();
     final pubkeyhex = HEX.encode(keypair.publicKey);
+    final prikeyhex = HEX.encode(keypair.privateKey);
+    print("seedhex:"+seedhex);
+    print("pathhex:"+pathhex);
     print("pubkeyhex:" + pubkeyhex);
-    print("prikeyhex:" + HEX.encode(keypair.privateKey));
+    print("prikeyhex:" + prikeyhex);
+    print("strkey accountid:" + StrKey.encodeStellarAccountId(keypair.publicKey));
+    
+    final ekp = new ed25519.KeyPair(32, 64);
+    Uint8List pk = ekp.publicKey;
+    Uint8List sk = ekp.secretKey;
+     for (int i = 0; i < 32; i++) {
+      sk[i] = seedlist[i];
+    }
+    final result = ed25519.TweetNaclFast.crypto_sign_keypair(pk, sk, true);
+    print("pkhex:" + HEX.encode(pk));
+    print("skhex:" + HEX.encode(sk));
+    print("result：" + result.toString());
+
+
     
 
     /*

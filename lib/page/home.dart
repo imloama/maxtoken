@@ -3,8 +3,10 @@ import 'package:maxtoken/utils/commons.dart';
 import 'package:maxtoken/theme/theme.dart';
 // import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 import 'package:maxtoken/hdwallet/hdwallet.dart';
+import 'package:maxtoken/hdwallet/kp.dart';
 import 'package:hex/hex.dart';
-
+import 'package:maxtoken/hdwallet/ed25519.dart' as ed25519;
+import 'dart:typed_data';
 /**
  * home page
  * my wallet page
@@ -39,25 +41,41 @@ class _HomePageState extends State<HomePage>{
   Widget _body(){
     final mnemonic =
         "illness spike retreat truth genius clock brain pass fit cave bargain toe";
-    final wallet = StellarHDWallet.fromMnemonic(mnemonic);
-    final index = 0;
-    final path = "m/44'/148'/$index'";
-    print(path);
+     final wallet = StellarHDWallet.fromMnemonic(mnemonic);
     final seedhex = HEX.encode(wallet.seed);
-    final pathhex = HEX.encode(wallet.derivePath("m/44'/148'/0'").sublist(0,32));
-    print(seedhex);
-    print(pathhex);
-    final keypair = wallet.getKeyPair();
+    final key = wallet.derivePath("m/44'/148'/0'");
+    final seedlist = key.sublist(0,32);
+    final pathhex = HEX.encode(seedlist);
+    final keypair = KeyPair.fromSecretSeedList(seedlist);
+    
+    // final keypair = wallet.getKeyPair();
     final pubkeyhex = HEX.encode(keypair.publicKey);
     final prikeyhex = HEX.encode(keypair.privateKey);
+
+     final ekp = new ed25519.KeyPair(32, 64);
+    Uint8List pk = ekp.publicKey;
+    Uint8List sk = ekp.secretKey;
+     for (int i = 0; i < 32; i++) {
+      sk[i] = seedlist[i];
+    }
+    final result = ed25519.TweetNaclFast.crypto_sign_keypair(pk, sk, true);
+    print("pkhex:" + HEX.encode(pk));
+    print("skhex:" + HEX.encode(sk));
+    print("result：" + result.toString());
+
     return Column(
       children: <Widget>[
         Text("seedhex:" + seedhex),
-        Text("path:"+path),
         Text("pathhex:" + pathhex),
         Text("pubkeyhex:" + pubkeyhex),
         Text("prikeyhex:" + prikeyhex),
-        Text("accountid:" + keypair.accountId)
+        Text("accountid:" + keypair.accountId),
+        Text("str accountid:" + StrKey.encodeStellarAccountId(keypair.publicKey)),
+        Text("2019-0730-2200"),
+        Text("pkhex:" + HEX.encode(pk)),
+        Text("skhex:" + HEX.encode(sk)),
+        Text("result：" + result.toString()),
+
       ],
     );
   }

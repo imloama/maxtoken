@@ -716,7 +716,9 @@ class Signature {
     Uint8List sk = kp.secretKey;
 
     // copy sk
-    for (int i = 0; i < seedLength; i++) sk[i] = seed[i];
+    for (int i = 0; i < seedLength; i++) {
+      sk[i] = seed[i];
+    }
 
     // generate pk from sk
     TweetNaclFast.crypto_sign_keypair(pk, sk, true);
@@ -851,7 +853,9 @@ class TweetNaclFast{
 
   static int _vn(Uint8List x, final int xoff, Uint8List y, final int yoff, int n) {
     int i,d = 0;
-    for (i = 0; i < n; i++) d |= (x[i + xoff] ^ y[i + yoff]) & 0xff;
+    for (i = 0; i < n; i++) {
+      d |= (x[i + xoff] ^ y[i + yoff]) & 0xff;
+    }
     return (1 & (Int32(d - 1).shiftRightUnsigned(8).toInt())) - 1;
   }
 
@@ -1347,8 +1351,12 @@ class TweetNaclFast{
     Uint8List z = Uint8List(16), x = Uint8List(64);
     int i;
     Int32 u;
-    for (i = 0; i < 16; i++) z[i] = 0;
-    for (i = 0; i < 8; i++) z[i] = n[i];
+    for (i = 0; i < 16; i++){
+      z[i] = 0;
+    } 
+    for (i = 0; i < 8; i++) {
+      z[i] = n[i];
+    }
     while (b >= 64) {
       crypto_core_salsa20(x, z, k, _sigma);
       for (i = 0; i < 64; i++)
@@ -1365,7 +1373,9 @@ class TweetNaclFast{
     }
     if (b > 0) {
       crypto_core_salsa20(x, z, k, _sigma);
-      for (i = 0; i < b; i++) c[cpos + i] = ((m[mpos + i] ^ x[i]) & 0xff).toInt();
+      for (i = 0; i < b; i++) {
+        c[cpos + i] = ((m[mpos + i] ^ x[i]) & 0xff).toInt();
+      }
     }
 
     return 0;
@@ -1375,8 +1385,12 @@ class TweetNaclFast{
     Uint8List z = Uint8List(16), x = Uint8List(64);
     int i;
     Int32 u;
-    for (i = 0; i < 16; i++) z[i] = 0;
-    for (i = 0; i < 8; i++) z[i] = n[i];
+    for (i = 0; i < 16; i++) {
+      z[i] = 0;
+    }
+    for (i = 0; i < 8; i++) {
+      z[i] = n[i];
+    }
     while (b >= 64) {
       crypto_core_salsa20(x, z, k, _sigma);
       for (i = 0; i < 64; i++) c[cpos + i] = x[i];
@@ -1391,7 +1405,9 @@ class TweetNaclFast{
     }
     if (b > 0) {
       crypto_core_salsa20(x, z, k, _sigma);
-      for (i = 0; i < b; i++) c[cpos + i] = x[i];
+      for (i = 0; i < b; i++) {
+        c[cpos + i] = x[i];
+      }
     }
 
     return 0;
@@ -1401,7 +1417,9 @@ class TweetNaclFast{
     Uint8List s = Uint8List(32);
     crypto_core_hsalsa20(s, n, k, _sigma);
     Uint8List sn = Uint8List(8);
-    for (int i = 0; i < 8; i++) sn[i] = n[i + 16];
+    for (int i = 0; i < 8; i++) {
+      sn[i] = n[i + 16];
+    }
     return crypto_stream_salsa20(c, cpos, d, sn, s);
   }
 
@@ -1411,7 +1429,9 @@ class TweetNaclFast{
 
     crypto_core_hsalsa20(s, n, k, _sigma);
     Uint8List sn = Uint8List(8);
-    for (int i = 0; i < 8; i++) sn[i] = n[i + 16];
+    for (int i = 0; i < 8; i++) {
+      sn[i] = n[i + 16];
+    }
     return _crypto_stream_salsa20_xor(c, cpos, m, mpos, d, sn, s);
   }
 
@@ -1445,7 +1465,9 @@ class TweetNaclFast{
 
   static int crypto_secretbox(Uint8List c, Uint8List m, int d, Uint8List n, Uint8List k) {
     int i;
-    if (d < 32) return -1;
+    if (d < 32) {
+      return -1;
+    }
     crypto_stream_xor(c, 0, m, 0, d, n, k);
     _crypto_onetimeauth(c, 16, c, 32, d - 32, c);
 
@@ -1457,9 +1479,13 @@ class TweetNaclFast{
       Uint8List m, Uint8List c, int d, Uint8List n, Uint8List k) {
     int i;
     Uint8List x = Uint8List(32);
-    if (d < 32) return -1;
+    if (d < 32) {
+      return -1;
+    }
     crypto_stream(x, 0, 32, n, k);
-    if (_crypto_onetimeauth_verify(c, 16, c, 32, d - 32, x) != 0) return -1;
+    if (_crypto_onetimeauth_verify(c, 16, c, 32, d - 32, x) != 0) {
+      return -1;
+    }
     crypto_stream_xor(m, 0, c, 0, d, n, k);
 
     ///for (i = 0; i < 32; i++) m[i] = 0;
@@ -1468,7 +1494,9 @@ class TweetNaclFast{
 
   static void _set25519(Int64List r, Int64List a) {
     int i;
-    for (i = 0; i < 16; i++) r[i] = a[i];
+    for (i = 0; i < 16; i++) {
+      r[i] = a[i];
+    }
   }
 
   static void _car25519(Int64List o) {
@@ -1499,7 +1527,9 @@ class TweetNaclFast{
   static void _pack25519(Uint8List o, Int64List n, final int noff) {
     int i, j, b;
     Int64List m = Int64List(16), t = Int64List(16);
-    for (i = 0; i < 16; i++) t[i] = n[i + noff];
+    for (i = 0; i < 16; i++) {
+      t[i] = n[i + noff];
+    }
     _car25519(t);
     _car25519(t);
     _car25519(t);
@@ -1543,8 +1573,9 @@ class TweetNaclFast{
 
   static void unpack25519(Int64List o, Uint8List n) {
     int i;
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < 16; i++){
       o[i] = (n[2 * i] & 0xff) + (((n[2 * i + 1] << 8) & 0xffff));
+    }    
     o[15] &= 0x7fff;
   }
 
@@ -1555,7 +1586,9 @@ class TweetNaclFast{
   static void _A_off(Int64List o, final int ooff, Int64List a, final int aoff,
       Int64List b, final int boff) {
     int i;
-    for (i = 0; i < 16; i++) o[i + ooff] = a[i + aoff] + b[i + boff];
+    for (i = 0; i < 16; i++) {
+      o[i + ooff] = a[i + aoff] + b[i + boff];
+    }
   }
 
   static void _Z(Int64List o, Int64List a, Int64List b) {
@@ -1565,7 +1598,9 @@ class TweetNaclFast{
   static void _Z_off(Int64List o, final int ooff, Int64List a, final int aoff,
       Int64List b, final int boff) {
     int i;
-    for (i = 0; i < 16; i++) o[i + ooff] = a[i + aoff] - b[i + boff];
+    for (i = 0; i < 16; i++) {
+      o[i + ooff] = a[i + aoff] - b[i + boff];
+    }
   }
 
   static void _M(Int64List o, Int64List a, Int64List b) {
@@ -2047,26 +2082,38 @@ class TweetNaclFast{
   static void _inv25519(Int64List o, final int ooff, Int64List i, final int ioff) {
     Int64List c = Int64List(16);
     int a;
-    for (a = 0; a < 16; a++) c[a] = i[a + ioff];
+    for (a = 0; a < 16; a++) {
+      c[a] = i[a + ioff];
+    }
     for (a = 253; a >= 0; a--) {
       _S_off(c, 0, c, 0);
-      if (a != 2 && a != 4) _M_off(c, 0, c, 0, i, ioff);
+      if (a != 2 && a != 4) {
+        _M_off(c, 0, c, 0, i, ioff);
+      }
     }
-    for (a = 0; a < 16; a++) o[a + ooff] = c[a];
+    for (a = 0; a < 16; a++) {
+      o[a + ooff] = c[a];
+    }
   }
 
   static void _pow2523(Int64List o, Int64List i) {
     Int64List c = Int64List(16);
     int a;
 
-    for (a = 0; a < 16; a++) c[a] = i[a];
+    for (a = 0; a < 16; a++) {
+      c[a] = i[a];
+    }
 
     for (a = 250; a >= 0; a--) {
       _S_off(c, 0, c, 0);
-      if (a != 1) _M_off(c, 0, c, 0, i, 0);
+      if (a != 1) {
+        _M_off(c, 0, c, 0, i, 0);
+      }
     }
 
-    for (a = 0; a < 16; a++) o[a] = c[a];
+    for (a = 0; a < 16; a++) {
+      o[a] = c[a];
+    }
   }
 
   static int crypto_scalarmult(Uint8List q, Uint8List n, Uint8List p) {
@@ -2079,7 +2126,9 @@ class TweetNaclFast{
         d = Int64List(16),
         e = Int64List(16),
         f = Int64List(16);
-    for (i = 0; i < 31; i++) z[i] = n[i];
+    for (i = 0; i < 31; i++) {
+      z[i] = n[i];
+    }
     z[31] = (((n[31] & 127) | 64) & 0xff).toInt();
     z[0] &= 248;
     unpack25519(x, p);
@@ -2768,7 +2817,9 @@ class TweetNaclFast{
       n %= 128;
     }
 
-    for (i = 0; i < n; i++) x[i] = m[b - n + i + moff];
+    for (i = 0; i < n; i++) {
+      x[i] = m[b - n + i + moff];
+    }
     x[n] = 128;
 
     n = 256 - 128 * (n < 112 ? 1 : 0);
@@ -2840,7 +2891,9 @@ class TweetNaclFast{
   static void _cswap(List<Int64List> p, List<Int64List> q, int b) {
     int i;
 
-    for (i = 0; i < 4; i++) _sel25519_off(p[i], 0, q[i], 0, b);
+    for (i = 0; i < 4; i++) {
+      _sel25519_off(p[i], 0, q[i], 0, b);
+    }
   }
 
   static void _pack(Uint8List r, List<Int64List> p) {
@@ -2903,7 +2956,9 @@ class TweetNaclFast{
 
     int i;
 
-    if (!seeded) randombytes_array_len(sk, 32);
+    if (!seeded) {
+      randombytes_array_len(sk, 32);
+    }
     crypto_hash_off(d, sk, 0, 32);
     d[0] &= 248;
     d[31] &= 127;
@@ -2912,7 +2967,9 @@ class TweetNaclFast{
     _scalarbase(p, d, 0);
     _pack(pk, p);
 
-    for (i = 0; i < 32; i++) sk[i + 32] = pk[i];
+    for (i = 0; i < 32; i++) {
+      sk[i + 32] = pk[i];
+    }
     return 0;
   }
 
@@ -2973,7 +3030,9 @@ class TweetNaclFast{
       x[j] &= 255;
     }
 
-    for (j = 0; j < 32; j++) x[j] -= carry * _L[j];
+    for (j = 0; j < 32; j++) {
+      x[j] -= carry * _L[j];
+    }
 
     for (i = 0; i < 32; i++) {
       x[i + 1] += x[i] >> 8;
@@ -2985,9 +3044,13 @@ class TweetNaclFast{
     Int64List x = Int64List(64);
     int i;
 
-    for (i = 0; i < 64; i++) x[i] = (r[i] & 0xff).toInt();
+    for (i = 0; i < 64; i++) {
+      x[i] = (r[i] & 0xff).toInt();
+    }
 
-    for (i = 0; i < 64; i++) r[i] = 0;
+    for (i = 0; i < 64; i++) {
+      r[i] = 0;
+    }
 
     _modL(r, 0, x);
   }
@@ -3028,12 +3091,20 @@ class TweetNaclFast{
     crypto_hash_off(h, sm, 0, n + 64);
     _reduce(h);
 
-    for (i = 0; i < 64; i++) x[i] = 0;
+    for (i = 0; i < 64; i++) {
+      x[i] = 0;
+    }
 
-    for (i = 0; i < 32; i++) x[i] = (r[i] & 0xff).toInt();
+    for (i = 0; i < 32; i++) {
+      x[i] = (r[i] & 0xff).toInt();
+    }
 
-    for (i = 0; i < 32; i++)
-      for (j = 0; j < 32; j++) x[i + j] += (h[i] & 0xff) * (d[j] & 0xff).toInt();
+    for (i = 0; i < 32; i++){
+      for (j = 0; j < 32; j++) {
+        x[i + j] += (h[i] & 0xff) * (d[j] & 0xff).toInt();
+      }
+    }
+      
 
     _modL(sm, 32, x);
 
@@ -3070,13 +3141,19 @@ class TweetNaclFast{
 
     _S(chk, r[0]);
     _M(chk, chk, den);
-    if (_neq25519(chk, num) != 0) _M(r[0], r[0], _I);
+    if (_neq25519(chk, num) != 0) {
+      _M(r[0], r[0], _I);
+    }
 
     _S(chk, r[0]);
     _M(chk, chk, den);
-    if (_neq25519(chk, num) != 0) return -1;
+    if (_neq25519(chk, num) != 0) {
+      return -1;
+    }
 
-    if (_par25519(r[0]) == (Int32(p[31] & 0xFF).shiftRightUnsigned(7).toInt())) _Z(r[0], _gf0, r[0]);
+    if (_par25519(r[0]) == (Int32(p[31] & 0xFF).shiftRightUnsigned(7).toInt())) {
+      _Z(r[0], _gf0, r[0]);
+    }
 
     _M(r[3], r[0], r[1]);
 
@@ -3104,13 +3181,21 @@ class TweetNaclFast{
 
     ///*mlen = -1;
 
-    if (n < 64) return -1;
+    if (n < 64) {
+      return -1;
+    }
 
-    if (_unpackneg(q, pk) != 0) return -1;
+    if (_unpackneg(q, pk) != 0) {
+      return -1;
+    }
 
-    for (i = 0; i < n; i++) m[i] = sm[i + smoff];
+    for (i = 0; i < n; i++) {
+      m[i] = sm[i + smoff];
+    }
 
-    for (i = 0; i < 32; i++) m[i + 32] = pk[i];
+    for (i = 0; i < 32; i++) {
+      m[i + 32] = pk[i];
+    }
 
     crypto_hash_off(h, m, 0, n);
 
@@ -3157,7 +3242,9 @@ class TweetNaclFast{
     }
     if (ret > 0) {
       rnd = Int64(jrandom.nextInt(1<<32));
-      for (int i = len - ret; i < len; i++) x[i] = (rnd.shiftRightUnsigned(8 * i).toInt());
+      for (int i = len - ret; i < len; i++) {
+        x[i] = (rnd.shiftRightUnsigned(8 * i).toInt());
+      }
     }
     return x;
   }
@@ -3447,7 +3534,9 @@ class poly1305 {
     if (this._leftover != 0) {
       i = this._leftover;
       this._buffer[i++] = 1;
-      for (; i < 16; i++) this._buffer[i] = 0;
+      for (; i < 16; i++) {
+        this._buffer[i] = 0;
+      }
       this._fin = 1;
       this.blocks(this._buffer, 0, 16);
     }
@@ -3491,9 +3580,13 @@ class poly1305 {
     mask &= 0xffff;
     ///////////////////////////////////////
 
-    for (i = 0; i < 10; i++) g[i] &= mask;
+    for (i = 0; i < 10; i++) {
+      g[i] &= mask;
+    }
     mask = ~mask;
-    for (i = 0; i < 10; i++) this._h[i] = (this._h[i] & mask) | g[i];
+    for (i = 0; i < 10; i++) {
+      this._h[i] = (this._h[i] & mask) | g[i];
+    }
 
     this._h[0] = ((this._h[0]       ) | (this._h[1] << 13)                    ) & 0xffff;
     this._h[1] = ((this._h[1].shiftRightUnsigned( 3)) | (this._h[2] << 10)                    ) & 0xffff;
@@ -3537,11 +3630,15 @@ class poly1305 {
     if (this._leftover != 0) {
       want = (16 - this._leftover);
       if (want > bytes) want = bytes;
-      for (i = 0; i < want; i++) this._buffer[this._leftover + i] = m[mpos + i];
+      for (i = 0; i < want; i++) {
+        this._buffer[this._leftover + i] = m[mpos + i];
+      }
       bytes -= want;
       mpos += want;
       this._leftover += want;
-      if (this._leftover < 16) return this;
+      if (this._leftover < 16) {
+        return this;
+      }
       this.blocks(_buffer, 0, 16);
       this._leftover = 0;
     }
@@ -3554,8 +3651,9 @@ class poly1305 {
     }
 
     if (bytes != 0) {
-      for (i = 0; i < bytes; i++)
+      for (i = 0; i < bytes; i++){
         this._buffer[this._leftover + i] = m[mpos + i];
+      }
       this._leftover += bytes;
     }
 
