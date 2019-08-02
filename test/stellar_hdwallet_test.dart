@@ -2,7 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 // import 'package:stellar_hd_wallet/stellar_hd_wallet.dart';
 import 'package:maxtoken/hdwallet/hdwallet.dart';
 import 'package:maxtoken/hdwallet/kp.dart';
-import 'package:maxtoken/hdwallet/ed25519.dart' as ed25519;
+// import 'package:maxtoken/hdwallet/ed25519.dart' as ed25519;
+import "package:ed25519_hd_key/ed25519_hd_key.dart" as ed25519;
+import 'package:tweetnacl/tweetnacl.dart' as ED25519;
 import 'package:hex/hex.dart';
 import 'dart:typed_data';
 
@@ -43,6 +45,18 @@ void main(){
     print("prikeyhex:" + prikeyhex);
     print("strkey accountid:" + StrKey.encodeStellarAccountId(keypair.publicKey));
     
+
+    // edd25519.ED25519_HD_KEY.getMasterKeyFromSeed(seedhex);
+    ed25519.KeyData kdata = ed25519.ED25519_HD_KEY.derivePath("m/44'/148'/0'", seedhex);
+    print("seed hex:" + HEX.encode(kdata.key.sublist(0,32)));
+    final pb = ed25519.ED25519_HD_KEY.getBublickKey(kdata.key.sublist(0,32), false);
+    print("str accountid: " + StrKey.encodeStellarAccountId(pb));
+
+    final signature = ED25519.Signature.keyPair_fromSeed(kdata.key.sublist(0,32));
+    print("pubkey hex:" + HEX.encode(signature.publicKey));
+
+
+    /*
     final ekp = new ed25519.KeyPair(32, 64);
     Uint8List pk = ekp.publicKey;
     Uint8List sk = ekp.secretKey;
@@ -53,6 +67,7 @@ void main(){
     print("pkhex:" + HEX.encode(pk));
     print("skhex:" + HEX.encode(sk));
     print("result：" + result.toString());
+    */
 
 
     

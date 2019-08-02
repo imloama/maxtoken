@@ -63,6 +63,7 @@ dependencies:
       url: git@github.com:imloama/dart-stellar-hd-wallet.git
       ref: dev
   web3dart: ^0.4.5
+  ed25519_hd_key: ^1.0.1
   # http: ^0.12.0+1
 
 

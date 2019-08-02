@@ -6,6 +6,7 @@ import 'package:maxtoken/hdwallet/hdwallet.dart';
 import 'package:maxtoken/hdwallet/kp.dart';
 import 'package:hex/hex.dart';
 import 'package:maxtoken/hdwallet/ed25519.dart' as ed25519;
+import 'package:tweetnacl/tweetnacl.dart' as ED25519;
 import 'dart:typed_data';
 /**
  * home page
@@ -63,6 +64,9 @@ class _HomePageState extends State<HomePage>{
     print("skhex:" + HEX.encode(sk));
     print("result：" + result.toString());
 
+    final signature = ED25519.Signature.keyPair_fromSeed(seedlist);
+    print("pubkey hex:" + HEX.encode(signature.publicKey));
+
     return Column(
       children: <Widget>[
         Text("seedhex:" + seedhex),
@@ -73,8 +77,10 @@ class _HomePageState extends State<HomePage>{
         Text("str accountid:" + StrKey.encodeStellarAccountId(keypair.publicKey)),
         Text("2019-0730-2200"),
         Text("pkhex:" + HEX.encode(pk)),
-        Text("skhex:" + HEX.encode(sk)),
-        Text("result：" + result.toString()),
+        // Text("skhex:" + HEX.encode(sk)),
+        // Text("result：" + result.toString()),
+        Text("--------------------------00"),
+        Text("pubkey hex:" + HEX.encode(signature.publicKey))
 
       ],
     );
